@@ -6,7 +6,7 @@
 #    By: telain <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/26 17:08:50 by telain            #+#    #+#              #
-#    Updated: 2015/12/17 19:40:56 by telain           ###   ########.fr        #
+#    Updated: 2016/02/19 15:24:50 by telain           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRC = ft_putstr.c ft_putchar.c ft_strdup.c ft_strlcpy.c ft_strlcat.c\
 	  ft_putchar_fd.c ft_putstr_fd.c ft_putnbr_fd.c ft_putendl_fd.c\
 	  ft_strsub.c ft_putnbr.c ft_putendl.c ft_strsplit.c ft_lstadd.c\
 	  ft_lstdel.c ft_lstdelone.c ft_lstiter.c ft_lstmap.c ft_lstnew.c\
-	  ft_atoi.c ft_factorial.c ft_isspace.c
+	  ft_atoi.c ft_factorial.c ft_isspace.c ft_putnendl.c
 
 OBJ = ft_putstr.o ft_putchar.o ft_strdup.o ft_strlcpy.o ft_strlcat.o\
 	  ft_strlen.o ft_strcpy.o ft_strncpy.o ft_strcat.o ft_strncat.o\
@@ -43,7 +43,7 @@ OBJ = ft_putstr.o ft_putchar.o ft_strdup.o ft_strlcpy.o ft_strlcat.o\
 	  ft_putchar_fd.o ft_putstr_fd.o ft_putnbr_fd.o ft_putendl_fd.o\
 	  ft_strsub.o ft_putnbr.o ft_putendl.o ft_strsplit.o ft_lstadd.o\
 	  ft_lstdel.o ft_lstdelone.o ft_lstiter.o ft_lstmap.o ft_lstnew.o\
-	  ft_atoi.o ft_factorial.o ft_isspace.o
+	  ft_atoi.o ft_factorial.o ft_isspace.o ft_putnendl.o
 
 $(NAME):
 	gcc $(FLAG) -c -I $(HEADER) $(SRC)
