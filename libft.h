@@ -6,7 +6,7 @@
 /*   By: telain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/23 11:54:53 by telain            #+#    #+#             */
-/*   Updated: 2015/12/14 15:22:46 by telain           ###   ########.fr       */
+/*   Updated: 2016/02/29 00:52:10 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define BUF_SIZE 1000
 # include <unistd.h>
 # include <string.h>
+# include <stdlib.h>
 
 typedef struct	s_list
 {
@@ -90,5 +91,6 @@ int				ft_power(int n, unsigned int power);
 int				*ft_sortint(int *tab);
 void			ft_swap(void *data1, void *data2);
 int				get_next_line(int const fd, char **line);
+void			ft_putnendl(int n);
 
 #endif

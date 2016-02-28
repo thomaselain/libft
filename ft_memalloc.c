@@ -6,7 +6,7 @@
 /*   By: telain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/26 16:29:08 by telain            #+#    #+#             */
-/*   Updated: 2015/12/17 17:47:34 by telain           ###   ########.fr       */
+/*   Updated: 2016/02/29 00:47:26 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	*ft_memalloc(size_t size)
 {
 	void	*temp;
 
-	temp = malloc(size);
+	temp = (void*)malloc(sizeof(void) * size);
 	if (temp == NULL)
 		return (NULL);
-	ft_memset(temp, 0, size);
+	ft_bzero(temp, size);
 	return (temp);
 }
