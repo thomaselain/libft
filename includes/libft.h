@@ -6,7 +6,7 @@
 /*   By: telain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/23 11:54:53 by telain            #+#    #+#             */
-/*   Updated: 2016/03/10 16:51:09 by telain           ###   ########.fr       */
+/*   Updated: 2016/03/05 14:39:54 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <string.h>
 # include <stdlib.h>
+# include "get_next_line.h"
 
 typedef struct	s_list
 {
@@ -85,7 +86,7 @@ void			ft_lstadd(t_list **alst, t_list *new);
 void			ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 int				ft_atoi(const char *str);
-int				ft_factorial(unsigned int n);
+int				ft_factorial(int n);
 int				ft_sqrt(unsigned int n);
 int				ft_power(int n, unsigned int power);
 int				*ft_sortint(int *tab);

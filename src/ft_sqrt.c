@@ -6,7 +6,7 @@
 /*   By: telain <telain@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/03/05 15:46:39 by telain            #+#    #+#             */
-/*   Updated: 2016/03/05 15:46:44 by telain           ###   ########.fr       */
+/*   Updated: 2016/03/24 16:11:46 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	ft_sqrt(int nb)
 
 	i = 1;
 	sq = 1;
-	if(nb == 0)
-		return(0);
+	if (nb == 0)
+		return (0);
 	while (i * i < nb)
 	{
 		i++;
@@ -26,5 +26,5 @@ int	ft_sqrt(int nb)
 	if ((nb % i) == 0)
 		return (i);
 	else
-		return(0);
+		return (0);
 }
