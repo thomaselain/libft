@@ -3,105 +3,123 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cchicote <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vvenance <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/03/02 20:04:05 by cchicote          #+#    #+#             */
-/*   Updated: 2016/05/07 17:31:39 by telain           ###   ########.fr       */
+/*   Created: 2016/07/11 14:55:18 by vvenance          #+#    #+#             */
+/*   Updated: 2016/07/12 12:32:26 by vvenance         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-t_gnl		*new_struct(t_gnl *new)
+static int	ft_free(char *save)
 {
-	new = ft_memalloc(sizeof(t_gnl));
-	new->str = ft_strnew(BUFF_SIZE + 1);
-	new->buf[BUFF_SIZE] = '\0';
-	new->start = 0;
-	new->end = 0;
-	return (new);
+    if (!save)
+        return (0);
+    else
+        free((void *)(save));
+    save = NULL;
+    return (0);
 }
 
-int			find_len(char *str, int start)
+static char	*ft_strjoin_free(char const *s1, char const *s2)
 {
-	int		i;
-
-	i = 0;
-	while (str[start++] != '\n' && str[start] != '\0')
-		i++;
-	return (i);
+    int		i;
+    int		iparam;
+    char	*str;
+    
+    i = 0;
+    iparam = 0;
+    if (!s1 || !s2)
+        return (NULL);
+    if (!(str = _MALLOCC(sizeof(*str) * (ft_strlen(s1) + ft_strlen(s2)) + 1)))
+        return (NULL);
+    while (s1[iparam] != '\0')
+    {
+        str[i++] = s1[iparam];
+        iparam++;
+    }
+    iparam = 0;
+    while (s2[iparam] != '\0')
+    {
+        str[i] = s2[iparam];
+        i++;
+        iparam++;
+    }
+    free((void *)(s1));
+    str[i] = '\0';
+    return (str);
 }
 
-int			find_bn(char *str, int start, int on)
+static int	ft_init(int fd, t_save *save)
 {
-	int index;
-
-	index = 0;
-	if (on == 1)
-	{
-		while (str[start] != '\0')
-		{
-			if (str[start] == '\n')
-				return (start);
-			start++;
-		}
-		return (-1);
-	}
-	else if (on == 0)
-	{
-		while (str[start++] != '\0')
-			index++;
-		return (index);
-	}
-	return (0);
+    int		ret;
+    char	buf[BUFF_SIZE + 1];
+    
+    save->save = NULL;
+    save->fd = fd;
+    ret = 0;
+    ft_memset(buf, '\0', BUFF_SIZE + 1);
+    while ((ret = read(fd, buf, BUFF_SIZE)) > 0)
+    {
+        if (save->save == NULL)
+            save->save = ft_strdup(buf);
+        else if (fd == 0 && save->save[0] == '\0' && buf[0] == '\n')
+            return ((ft_free(save->save)));
+        else
+            save->save = ft_strjoin_free(save->save, buf);
+        ft_memset(buf, '\0', BUFF_SIZE + 1);
+    }
+    if (ret == -1)
+        return (-1);
+    if (!save->save)
+        return (0);
+    return (1);
 }
 
-int			sub_cpy(t_gnl *gnl, char **line, int ret)
+static int	get_line(t_save *save, char **line)
 {
-	if (ret == 0)
-	{
-		*line = ft_strsub(gnl->str, gnl->start,
-			find_bn(gnl->str, gnl->start, 0));
-		gnl->end = 1;
-		if (gnl->str[gnl->start - 1] == '\n'
-			&& gnl->str[gnl->start] == '\0')
-			return (0);
-		return (1);
-	}
-	else
-	{
-		*line = ft_strsub(gnl->str, gnl->start,
-			find_len(gnl->str, gnl->start));
-		gnl->start = find_bn(gnl->str, gnl->start, 1) + 1;
-		return (1);
-	}
+    int		i;
+    char	*tmp;
+    
+    i = 0;
+    tmp = NULL;
+    while (save->save[i] != '\n' && save->save[i] != '\0')
+        i++;
+    if (i == 1 && save->save[i] != '\n')
+        return (ft_free(save->save));
+    if (save->save[i] == '\n' || (save->save[i] == '\0' && i != 0))
+    {
+        *line = ft_strsub(save->save, 0, i);
+        tmp = ft_strsub(save->save, i + 1, (ft_strlen(save->save) - (i - 1)));
+        if (save->save)
+            ft_free(save->save);
+        if (!line || !tmp)
+            return (-1);
+        save->save = ft_strdup(tmp);
+        if (tmp)
+            ft_free(tmp);
+        return (1);
+    }
+    ft_free(save->save);
+    save->save = NULL;
+    return (0);
 }
 
-int			get_next_line(int const fd, char **line)
+int			get_next_line(const int fd, char **line)
 {
-	static t_gnl	*gnl = NULL;
-	int				ret;
-
-	if (fd < 0 || BUFF_SIZE < 1 || line == NULL)
-		return (-1);
-	!gnl ? gnl = new_struct(gnl) : gnl;
-	if (gnl->end == 1)
-	{
-		*line = ft_strnew(0);
-		gnl ? ft_memdel((void*)&gnl) : gnl;
-		return (0);
-	}
-	while (find_bn(gnl->str, gnl->start, 1) == -1 && ret > 0)
-	{
-		if ((ret = read(fd, gnl->buf, BUFF_SIZE)) == -1)
-			return (-1);
-		gnl->buf[ret] = '\0';
-		gnl->str = ft_strjoin(gnl->str, gnl->buf);
-	}
-	if (sub_cpy(gnl, line, ret) == 0)
-	{
-		gnl ? ft_memdel((void*)&gnl) : gnl;
-		return (0);
-	}
-	return (1);
+    static t_save	save;
+    int				ret;
+    
+    if (BUFF_SIZE < 1 || fd < 0)
+        return (-1);
+    if (!save.save || save.fd != fd)
+    {
+        if (save.fd != fd && save.save)
+            ft_free(save.save);
+        if ((ret = ft_init(fd, &save)) < 1)
+            return (ret);
+    }
+    ret = get_line(&save, line);
+    return (ret);
 }

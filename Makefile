@@ -6,7 +6,7 @@
 #    By: telain <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/26 17:08:50 by telain            #+#    #+#              #
-#    Updated: 2016/06/23 14:26:29 by telain           ###   ########.fr        #
+#    Updated: 2016/09/01 18:30:11 by telain           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,9 @@ $(NAME): $(OBJECTS)
 
 %.o: %.c
 	@$(CC) $(WFLAGS) $(HEADERS) -c -o $@ $^
-	printf "[\e[0;32m✓\e[0m] : $@"
+	printf "\e[32m"
+	printf "\e[0m[\e[32mLibft object\e[0m]\e[32m--\e[0m--\e[32m--\e[0m>"
+	printf "\t: [\e[0;32m✓\e[0m] : $@"
 	printf "\033[0m\n"
 
 clean:

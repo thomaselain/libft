@@ -3,30 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cchicote <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: vvenance <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/08 16:52:46 by cchicote          #+#    #+#             */
-/*   Updated: 2016/05/07 18:47:43 by telain           ###   ########.fr       */
+/*   Created: 2016/07/11 15:06:24 by vvenance          #+#    #+#             */
+/*   Updated: 2016/09/01 18:10:46 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-
-# include "../includes/libft.h"
-# include <stdio.h>
+# define BUFF_SIZE 10
+# define _MALLOCC (char *)malloc
+# include "libft.h"
 # include <fcntl.h>
-# define BUFF_SIZE 9999
+# include <stdlib.h>
+# include <sys/types.h>
+# include <sys/uio.h>
+# include <unistd.h>
 
-typedef struct	s_gnl
+typedef struct	s_save
 {
-	char		buf[BUFF_SIZE + 1];
-	char		*str;
-	int			start;
-	int			end;
-	int			fd;
-}				t_gnl;
+    char		*save;
+    int			fd;
+}				t_save;
 
-int				get_next_line(int const fd, char **line);
+int				get_next_line(const int fd, char **line);
 
 #endif
