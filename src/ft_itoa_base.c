@@ -6,37 +6,42 @@
 /*   By: telain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 14:25:50 by telain            #+#    #+#             */
-/*   Updated: 2016/06/23 14:26:13 by telain           ###   ########.fr       */
+/*   Updated: 2017/04/30 21:15:16 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#define FT_ABS(X) (X < 0 ? X : -X)
 
-char	*ft_itoa_base(int v, int base)
+char		get_ascii(int c)
 {
-	int		length;
-	int		sign;
-	int		bck;
-	char	*ret;
+	c = FT_ABS(c);
+	if (c <= 9)
+		return (c + '0');
+	return (c - 10 + 'A');
+}
 
-	bck = v;
-	length = 1;
-	sign = v < 0 ? 1 : 0;
-	if (base != 10)
-		sign = 0;
-	if (base < 2 || base > 16)
-		return (NULL);
-	while (bck /= base)
-		length++;
-	if (!(ret = (char *)malloc(sizeof(char) * length + sign + 1)))
-		return (NULL);
-	ret[length + sign] = '\0';
-	ret[0] = '-';
-	while (length--)
+char		*ft_itoa_base(int value, int base)
+{
+	int		i;
+	int		sign;
+	char	*s;
+
+	sign = value < 0 ? -1 : 1;
+	if (value == 0)
+		return ("0\0");
+	i = 32;
+	s = (char*)malloc(sizeof(char) * 34);
+	s[33] = 0;
+	while (value)
 	{
-		ret[length + sign] = v < 0 ? (-(v % -(base))) + 48 : (v % base) + 48;
-		ret[length + sign] += ret[length + sign] > 57 ? 7 : 0;
-		v /= base;
+		s[i--] = get_ascii(value & base);
+		value -= value % base;
 	}
-	return (ret);
+	if (sign == -1 && base == 10)
+		s[i] = '-';
+	else
+		i++;
+	s += i;
+	return (s);
 }

@@ -6,7 +6,7 @@
 #    By: telain <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/26 17:08:50 by telain            #+#    #+#              #
-#    Updated: 2016/09/01 18:30:11 by telain           ###   ########.fr        #
+#    Updated: 2017/04/30 21:07:44 by telain           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ SRC_BASE = ft_putstr.c ft_putchar.c ft_strdup.c ft_strlcpy.c ft_strlcat.c\
 	  ft_putnbr.c ft_putendl.c ft_strsplit.c ft_lstadd.c\
 	  ft_lstdel.c ft_lstdelone.c ft_lstiter.c ft_lstmap.c ft_lstnew.c\
 	  ft_factorial.c ft_isspace.c ft_putnendl.c get_next_line.c\
-	  ft_sqrt.c ft_power.c ft_swap.c ft_itoa_base.c
+	  ft_sqrt.c ft_power.c ft_swap.c ft_itoa_base.c print_unicode.c\
+
 SRC = $(addprefix $(SRC_DIR)/, $(SRC_BASE))
 
 HEADERS	= -Iincludes/
