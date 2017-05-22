@@ -3,45 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa_base.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: telain <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: exam <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/06/23 14:25:50 by telain            #+#    #+#             */
-/*   Updated: 2017/04/30 21:15:16 by telain           ###   ########.fr       */
+/*   Created: 2016/04/19 10:01:42 by exam              #+#    #+#             */
+/*   Updated: 2016/04/19 10:26:24 by exam             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#define FT_ABS(X) (X < 0 ? X : -X)
 
-char		get_ascii(int c)
+char	*ft_itoa_base(int value, int base)
 {
-	c = FT_ABS(c);
-	if (c <= 9)
-		return (c + '0');
-	return (c - 10 + 'A');
-}
-
-char		*ft_itoa_base(int value, int base)
-{
-	int		i;
+	int		length;
 	int		sign;
-	char	*s;
+	int		bck;
+	char	*ret;
 
-	sign = value < 0 ? -1 : 1;
-	if (value == 0)
-		return ("0\0");
-	i = 32;
-	s = (char*)malloc(sizeof(char) * 34);
-	s[33] = 0;
-	while (value)
+	bck = value;
+	length = 1;
+	sign = value < 0 ? 1 : 0;
+	if (base != 10)
+		sign = 0;
+	if (base < 2 || base > 16)
+		return (NULL);
+	while (bck /= base)
+		length++;
+	if (!(ret = (char *)malloc(sizeof(char) * length + sign + 1)))
+		return (NULL);
+	ret[length + sign] = '\0';
+	ret[0] = '-';
+	while (length--)
 	{
-		s[i--] = get_ascii(value & base);
-		value -= value % base;
+		ret[length + sign] = value < 0 ? (-(value % -(base))) + 48: (value % base) + 48;
+		if (ret[length + sign] > 57)
+			ret[length + sign] += 7;
+		value /= base;
 	}
-	if (sign == -1 && base == 10)
-		s[i] = '-';
-	else
-		i++;
-	s += i;
-	return (s);
+	return (ret);
 }

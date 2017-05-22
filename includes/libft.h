@@ -6,7 +6,7 @@
 /*   By: telain <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/23 11:54:53 by telain            #+#    #+#             */
-/*   Updated: 2017/04/30 21:17:54 by telain           ###   ########.fr       */
+/*   Updated: 2017/05/22 20:12:46 by telain           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,8 @@ void			ft_swap(void *data1, void *data2);
 int				get_next_line(int const fd, char **line);
 void			ft_putnendl(int n);
 char			*ft_itoa_base(int value, int base);
+void			print_unicode(int c);
+int				ft_strcount(char *s, char c);
+char			*ft_strnchr(char *s, char c, int l);
 
 #endif
